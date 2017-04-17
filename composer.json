@@ -1,0 +1,15 @@
+
+{
+  "name": "topcu/toplusmslaravel",
+  "description": "Laravel Notification for toplusmsapi.com",
+  "authors": [
+    {
+      "name": "Toplusms Laravel",
+      "email": "hctopcu@gmail.com"
+    }
+  ],
+  "minimum-stability": "dev",
+  "require": {
+    "guzzlehttp/guzzle": "^6.2"
+  }
+}
