@@ -59,27 +59,18 @@ class TopluSmsChannel
      */
     public function send($notifiable, Notification $notification)
     {
+        if(empty($this->username) || empty($this->password)){
+            throw new \InvalidArgumentException("Missing Toplusms credentials");
+        }
 
         if (! $to = $notifiable->routeNotificationFor('sms')) {
             return;
         }
-        var_dump("sending2");
-
         $message = $notification->toSms($notifiable);
 
         if (is_string($message)) {
             $message = new SmsMessage($message);
         }
-        var_dump("sending3");
-
-        var_dump([
-            'query' => [
-                'username' => $this->username,
-                'password' => $this->password,
-                'sender' => $message->sender ?: $this->sender,
-                'receipents' => $to,
-                'text' => trim($message->content),
-            ]]);
 
         $response = $this->http->get("https://api.iletimerkezi.com/v1/send-sms/get/", [
             'query' => [
@@ -92,11 +83,8 @@ class TopluSmsChannel
         ]);
 
         $status_code = $response->getStatusCode();
-
-        /* TODO
-        Handle response status codes and throw exceptions
-        */
-
-
+        if(200 !== $status_code){
+            throw new Exception($status_code);
+        }
     }
 }

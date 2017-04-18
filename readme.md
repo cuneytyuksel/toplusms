@@ -10,7 +10,7 @@ This is a simple Notifications channel for Laravel.
 First, you'll need to require the package with Composer:
 
 ```sh
-composer require topcu/toplusmsşaravel
+composer require topcu/toplusmslaravel
 ```
 
 Aftwards, run `composer update` from your command line.
