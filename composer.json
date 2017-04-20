@@ -12,5 +12,10 @@
   "require": {
     "illuminate/support": "^5.3",
     "guzzlehttp/guzzle": "^6.2"
+  },
+  "autoload": {
+    "psr-4": {
+      "Topcu\\TopluSms\\": "src/"
+    }
   }
 }
