@@ -10,6 +10,7 @@ namespace Topcu\TopluSms;
 
 use Illuminate\Notifications\Notification;
 use GuzzleHttp\Client as HttpClient;
+use Illuminate\Contracts\Logging\Log as LogContract;
 
 class TopluSmsChannel
 {
@@ -28,15 +29,31 @@ class TopluSmsChannel
      * @var string
      */
     private $sender;
+
+    /**
+     * @var bool
+     */
+    private $pretend;
+
+    /**
+     * @var string
+     */
+    private $url="https://api.iletimerkezi.com/v1/send-sms/get/";
+    /**
+     * @var LogContract
+     */
+    private $logger;
+
     /**
      * Create a new TopluSms channel instance.
      *
      * @param  \GuzzleHttp\Client  $http
      * @return void
      */
-    public function __construct(HttpClient $http)
+    public function __construct(LogContract $logger, HttpClient $http)
     {
         $this->http = $http;
+        $this->logger = $logger;
     }
 
     /**
@@ -48,6 +65,7 @@ class TopluSmsChannel
         $this->username = $config["username"];
         $this->password = $config["password"];
         $this->sender = $config["from"];
+        $this->pretend = array_get($config, "pretend", false);
     }
 
     /**
@@ -72,7 +90,7 @@ class TopluSmsChannel
             $message = new SmsMessage($message);
         }
 
-        $response = $this->http->get("https://api.iletimerkezi.com/v1/send-sms/get/", [
+        $params = [
             'query' => [
                 'username' => $this->username,
                 'password' => $this->password,
@@ -80,11 +98,22 @@ class TopluSmsChannel
                 'receipents' => $to,
                 'text' => trim($message->content),
             ]
-        ]);
+        ];
 
-        $status_code = $response->getStatusCode();
-        if(200 !== $status_code){
-            throw new Exception($status_code);
+        if($this->pretend){
+            $this->pretend($params);
+        }else{
+            $response = $this->http->get($this->url, $params);
+
+            $status_code = $response->getStatusCode();
+            if(200 !== $status_code){
+                throw new Exception($status_code);
+            }
         }
+    }
+    
+    public function pretend($params)
+    {
+        $this->logger->debug("[SMS_API_CALL]: " . $this->url . "?" . http_build_query($params));
     }
 }
