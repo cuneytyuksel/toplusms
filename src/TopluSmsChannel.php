@@ -91,19 +91,17 @@ class TopluSmsChannel
         }
 
         $params = [
-            'query' => [
-                'username' => $this->username,
-                'password' => $this->password,
-                'sender' => $message->sender ?: $this->sender,
-                'receipents' => $to,
-                'text' => trim($message->content),
-            ]
+            'username' => $this->username,
+            'password' => $this->password,
+            'sender' => $message->sender ?: $this->sender,
+            'receipents' => $to,
+            'text' => trim($message->content),
         ];
 
         if($this->pretend){
             $this->pretend($params);
         }else{
-            $response = $this->http->get($this->url, $params);
+            $response = $this->http->get($this->url, ['query' =>$params]);
 
             $status_code = $response->getStatusCode();
             if(200 !== $status_code){
@@ -111,7 +109,7 @@ class TopluSmsChannel
             }
         }
     }
-    
+
     public function pretend($params)
     {
         $this->logger->debug("[SMS_API_CALL]: " . $this->url . "?" . http_build_query($params));
