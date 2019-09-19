@@ -1,6 +1,6 @@
 <?php
 
-namespace Topcu\TopluSms;
+namespace Sms\TopluSms;
 
 use Notification;
 use Illuminate\Support\ServiceProvider;
