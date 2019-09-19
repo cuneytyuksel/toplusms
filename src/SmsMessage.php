@@ -6,7 +6,7 @@
  * Time: 10:30
  */
 
-namespace Topcu\TopluSms;
+namespace Sms\TopluSms;
 
 
 class SmsMessage
