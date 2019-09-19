@@ -2,6 +2,7 @@
 {
   "name": "cuneytyuksel/toplusms",
   "description": "Laravel Notification for toplusmsapi.com",
+  "license": "MIT",
   "authors": [
     {
       "name": "Toplusms Laravel",
