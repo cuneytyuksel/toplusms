@@ -6,11 +6,11 @@
  * Time: 10:03
  */
 
-namespace Topcu\TopluSms;
+namespace Sms\TopluSms;
 
 use Illuminate\Notifications\Notification;
 use GuzzleHttp\Client as HttpClient;
-use Illuminate\Contracts\Logging\Log as LogContract;
+use Psr\Log\LoggerInterface as LogContract;
 
 class TopluSmsChannel
 {
