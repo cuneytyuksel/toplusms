@@ -10,7 +10,7 @@ This is a simple Notifications channel for Laravel.
 First, you'll need to require the package with Composer:
 
 ```sh
-composer require topcu/toplusmslaravel
+composer require cuneytyuksel/toplusms
 ```
 
 Aftwards, run `composer update` from your command line.
@@ -20,7 +20,7 @@ Then, update `config/app.php` by adding an entry for the service provider.
 ```php
 'providers' => [
 	// ...
-    Topcu\TopluSms\TopluSmsProvider::class,
+    Sms\TopluSms\TopluSmsProvider::class,
 ];
 ```
 
