@@ -6,7 +6,7 @@
  * Time: 09:58
  */
 
-namespace Topcu\TopluSms;
+namespace Sms\TopluSms;
 /**
  * Class Exception
  * @package Topcu\TopluSms
